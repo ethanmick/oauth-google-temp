@@ -1,4 +1,3 @@
-import { prisma } from '@/lib/prisma'
 import { session } from '@/lib/session'
 import { NextAuthOptions } from 'next-auth'
 import NextAuth from 'next-auth/next'
@@ -23,33 +22,33 @@ const authOption: NextAuthOptions = {
         throw new Error('No profile')
       }
 
-      await prisma.user.upsert({
-        where: {
-          email: profile.email,
-        },
-        create: {
-          email: profile.email,
-          name: profile.name,
-        },
-        update: {
-          name: profile.name,
-        },
-      })
+      // await prisma.user.upsert({
+      //   where: {
+      //     email: profile.email,
+      //   },
+      //   create: {
+      //     email: profile.email,
+      //     name: profile.name,
+      //   },
+      //   update: {
+      //     name: profile.name,
+      //   },
+      // })
       return true
     },
     session,
     async jwt({ token, user, account, profile }) {
-      if (profile) {
-        const user = await prisma.user.findUnique({
-          where: {
-            email: profile.email,
-          },
-        })
-        if (!user) {
-          throw new Error('No user found')
-        }
-        token.id = user.id
-      }
+      // if (profile) {
+      //   const user = await prisma.user.findUnique({
+      //     where: {
+      //       email: profile.email,
+      //     },
+      //   })
+      //   if (!user) {
+      //     throw new Error('No user found')
+      //   }
+      //   token.id = user.id
+      // }
       return token
     },
   },
